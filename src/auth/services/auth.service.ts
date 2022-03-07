@@ -17,7 +17,7 @@ export class AuthService {
         private readonly userService   : UserService
     ){}
 
-    async signUp(authDto : AuthDto){
+    async signUp(authDto : AuthDto):Promise<UserDTO>{
         try {
             const user = await this.userService.createUser(authDto);
             delete user.password;
@@ -31,7 +31,7 @@ export class AuthService {
         }
     }
 
-    async signIn(authDto : AuthLoginDto){
+    async signIn(authDto : AuthLoginDto):Promise<{token:string}>{
         const {email , password} = authDto;
         const user = await this.userService.findUserByEmail(email);
         if(!user)throw new ForbiddenException('Credentials incorrect.');

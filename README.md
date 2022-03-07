@@ -38,4 +38,4 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 ## Author : 
-[Haitham Oumerzoug](https://github.com/HaithamOumerzoug)
+* [Haitham Oumerzoug](https://github.com/HaithamOumerzoug)

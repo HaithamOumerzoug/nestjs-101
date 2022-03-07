@@ -11,7 +11,8 @@ export class ProductService {
     ) {}
 
     async getALlMyProducts(userId : number):Promise<Product[]>{
-        return this.prismaService.product.findMany({
+        // * Method 1 : 
+        /*return this.prismaService.product.findMany({
             where:{userId},
             include:{
                 user:true
@@ -20,7 +21,24 @@ export class ProductService {
                 delete product.user.password;
                 return product;
             })
-        ));
+        ));*/
+
+        // * Method 2 :
+        return await this.prismaService.product.findMany({
+            where:{userId},
+            include:{
+                // ! Eager Loading
+                user:{
+                    select:{
+                        id:true,
+                        name:true,
+                        createdAt:true,
+                        updatedAt:true,
+                        email:true
+                    }
+                }
+            },
+        })
     }
 
     async createProduct(userId : number , productDto : ProductDto):Promise<Product>{
