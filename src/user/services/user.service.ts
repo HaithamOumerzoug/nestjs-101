@@ -52,13 +52,17 @@ export class UserService {
         return user;
     }
 
-    async deleteUser(userId : number):Promise<any>{
+    async deleteUser(userId : number):Promise<{msg:string}>{
         try {
             const user = await this.prismaService.user.delete({where:{id:userId}});
-            return `User id ${userId} deleted`;
+            return {msg:`User id ${userId} deleted`};
         } catch (error) {
+            console.log(error);
+    
             if(error instanceof PrismaClientKnownRequestError){
                 if(error.code == 'P2025')throw new HttpException(`User id : ${userId} not found` , HttpStatus.NOT_FOUND);
+                // Foreinkey exception
+                if(error.code == 'P2003')throw new HttpException(`Can't delete the user.`,HttpStatus.FORBIDDEN);
             }
             throw new InternalServerErrorException("Server error");
         }

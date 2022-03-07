@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Product } from '@prisma/client';
 import { IsNumber } from 'class-validator';
@@ -28,4 +28,10 @@ export class ProductController {
     async updateProduct(@Param('productId' , ParseIntPipe)productId : number , @Body() productDto : ProductDto):Promise<Product>{
         return this.productService.updateProduct(productId , productDto);
     }
+
+    @Delete('delete/:productId')
+    async deleteProduct(@GetUser('id') userId , @Param('productId' , ParseIntPipe)productId : number):Promise<{msg:string}>{
+        return this.productService.deleteProduct(userId,productId);
+    }
+
 }
