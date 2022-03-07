@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpCode, HttpException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { User } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { classToPlain, plainToClass } from 'class-transformer';
 
 import { PrismaService } from 'src/prisma';
@@ -33,5 +34,17 @@ export class UserService {
         const user = await this.prismaService.user.update({where:{id:userId},data:{...userDto}});
         delete user.password;
         return user;
+    }
+
+    async deleteUser(userId : number):Promise<any>{
+        try {
+            const user = await this.prismaService.user.delete({where:{id:userId}});
+            return `User id ${userId} deleted`;
+        } catch (error) {
+            if(error instanceof PrismaClientKnownRequestError){
+                if(error.code == 'P2025')throw new HttpException(`User id : ${userId} not found` , HttpStatus.NOT_FOUND);
+            }
+            throw new InternalServerErrorException("Server error");
+        }
     }
 }
