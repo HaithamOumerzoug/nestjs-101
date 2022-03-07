@@ -12,9 +12,7 @@ export class UserController {
     
     constructor(
         private readonly userService : UserService
-    ) {
-        
-    }
+    ) {}
 
     @Get('/me')
     getUser(@GetUser('id') userId : number):Promise<UserDTO>{

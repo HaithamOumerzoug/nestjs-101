@@ -1,42 +1,28 @@
 import { ForbiddenException, Injectable, InternalServerErrorException } from '@nestjs/common';
-import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import * as argon from 'argon2';
+import { classToPlain, plainToClass } from 'class-transformer';
 
-import { PrismaService } from 'src/prisma';
 import { AuthDto, AuthLoginDto } from '../dtos';
+import { UserDTO, UserService } from 'src/user';
 
 @Injectable()
 export class AuthService {
 
     constructor(
-        private prismaService : PrismaService,
-        private jwtService    : JwtService,
-        private configService : ConfigService
+        private readonly jwtService    : JwtService,
+        private readonly configService : ConfigService,
+        private readonly userService   : UserService
     ){}
 
     async signUp(authDto : AuthDto){
         try {
-            const {email,name,password} = authDto;
-        
-            const hashed_password = await argon.hash(password);
-            const user = await this.prismaService.user.create({
-                data:{
-                    email,
-                    name,
-                    password:hashed_password
-                },
-                // remove hash from user response
-                /*select:{
-                    name:true,
-                    email:true,
-                    createdAt:true,
-                    updatedAt:true
-                }*/
-            });
+            const user = await this.userService.createUser(authDto);
             delete user.password;
-            return user;
+            const userDto : UserDTO = plainToClass(UserDTO, classToPlain(user));
+            return userDto;
         } catch (error) {
             if(error instanceof PrismaClientKnownRequestError){
                 if(error.code = 'P2002')throw new ForbiddenException("Credentials duplicated");
@@ -47,11 +33,7 @@ export class AuthService {
 
     async signIn(authDto : AuthLoginDto){
         const {email , password} = authDto;
-        const user = await this.prismaService.user.findUnique({
-            where:{
-                email
-            }
-        });
+        const user = await this.userService.findUserByEmail(email);
         if(!user)throw new ForbiddenException('Credentials incorrect.');
         const isMatches = await argon.verify(user.password,password);
         if(!isMatches)throw  new ForbiddenException('Credentials incorrect.');
