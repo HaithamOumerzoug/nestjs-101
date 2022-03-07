@@ -14,17 +14,17 @@ export class UserController {
         private readonly userService : UserService
     ) {}
 
-    @Get('/me')
+    @Get('me')
     getUser(@GetUser('id') userId : number):Promise<UserDTO>{
         return this.userService.getCurrentUser(userId);
     }
 
-    @Patch('/edit')
+    @Patch('edit')
     editUser(@GetUser('id') userId : number , @Body() userDto : UserUpdateDto):Promise<User>{
         return this.userService.updateUser(userId , userDto);
     }
 
-    @Delete('/deleteAccount')
+    @Delete('deleteAccount')
     deleteUser(@GetUser('id') userId:number):Promise<any>{
         return this.userService.deleteUser(userId);
     }

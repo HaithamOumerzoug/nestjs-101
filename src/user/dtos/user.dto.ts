@@ -1,4 +1,4 @@
-import { Products } from "@prisma/client"
+import { Product } from "@prisma/client"
 
 export class UserDTO {
     id        : number
@@ -7,5 +7,5 @@ export class UserDTO {
     name      : string
     email     : string
 
-    products  : Products[]
+    products  : Product[]
 }

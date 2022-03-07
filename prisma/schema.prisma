@@ -18,12 +18,14 @@ model User {
   email String @unique
   password String
 
-  products Products[]
+  products Product[]
   @@map("users")
 }
 
-model Products {
+model Product {
   id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   name String 
   price Float
   userId Int

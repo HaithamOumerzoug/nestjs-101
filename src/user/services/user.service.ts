@@ -2,7 +2,9 @@ import { HttpException, HttpStatus, Injectable, InternalServerErrorException, No
 import { User } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { classToPlain, plainToClass } from 'class-transformer';
+import * as argon from 'argon2';
 
+import { AuthDto } from 'src/auth';
 import { PrismaService } from 'src/prisma';
 import { UserDTO, UserUpdateDto } from '../dtos'
 
@@ -33,6 +35,20 @@ export class UserService {
     async updateUser(userId : number , userDto: UserUpdateDto):Promise<User>{
         const user = await this.prismaService.user.update({where:{id:userId},data:{...userDto}});
         delete user.password;
+        return user;
+    }
+
+    async createUser(dto : AuthDto):Promise<User>{
+        const {email,name,password} = dto;
+
+        const hashed_password = await argon.hash(password);
+        const user = await this.prismaService.user.create({
+            data:{
+                email,
+                name,
+                password:hashed_password
+            },
+        });
         return user;
     }
 

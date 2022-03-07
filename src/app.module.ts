@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth';
 import { PrismaModule } from './prisma';
 import { UserModule } from './user';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { UserModule } from './user';
     ConfigModule.forRoot({
       isGlobal:true
     }),
-    UserModule
+    UserModule,
+    ProductModule
   ],
   controllers: [AppController],
   providers: [AppService],
