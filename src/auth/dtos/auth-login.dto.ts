@@ -10,14 +10,5 @@ export class AuthLoginDto {
     @IsString()
     @IsNotEmpty()
     password : string
-
-
-
-    get getEmail():string {
-        return this.email;
-    }
-
-    get getPassword():string{
-        return this.password;
-    }
+    
 }

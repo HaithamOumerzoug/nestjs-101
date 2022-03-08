@@ -11,7 +11,12 @@ export class PrismaService extends PrismaClient{
                     url:configService.get('DATABASE_URL')
                 }
             },
-            log:['query', 'info', 'warn', 'error'],
+            // log:['query', 'info', 'warn', 'error'],
         })
+    }
+
+    cleanDB(){
+        this.product.deleteMany();
+        this.user.deleteMany();
     }
 }

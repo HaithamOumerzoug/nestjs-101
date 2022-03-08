@@ -13,17 +13,4 @@ export class AuthDto {
 
     @IsString()
     name : string
-
-
-    get getEmail():string {
-        return this.email;
-    }
-
-    get getName():string {
-        return this.name;
-    }
-
-    get getPassword():string{
-        return this.password;
-    }
 }
