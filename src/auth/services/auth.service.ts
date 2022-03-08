@@ -6,7 +6,7 @@ import * as argon from 'argon2';
 import { classToPlain, plainToClass } from 'class-transformer';
 
 import { AuthDto, AuthLoginDto } from '../dtos';
-import { UserDTO, UserService } from 'src/user';
+import { UserDTO, UserService } from '../../user';
 
 @Injectable()
 export class AuthService {

@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Product } from '@prisma/client';
-import { GetUser } from 'src/user';
+import { GetUser } from '../user';
 import { ProductDto } from './dtos/product.dto';
 import { ProductService } from './services';
 

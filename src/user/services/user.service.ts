@@ -4,8 +4,8 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { classToPlain, plainToClass } from 'class-transformer';
 import * as argon from 'argon2';
 
-import { AuthDto } from 'src/auth';
-import { PrismaService } from 'src/prisma';
+import { AuthDto } from '../../auth';
+import { PrismaService } from '../../prisma';
 import { UserDTO, UserUpdateDto } from '../dtos'
 
 @Injectable()

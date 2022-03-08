@@ -1,7 +1,7 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Product } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { PrismaService } from 'src/prisma';
+import { PrismaService } from '../../prisma';
 import { ProductDto } from '../dtos/product.dto';
 
 @Injectable()
