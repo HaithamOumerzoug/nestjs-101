@@ -1,6 +1,0 @@
-projectKey=nestjs-poc
-serverUrl=https://sonar.leyton.fr
-serverVersion=8.9.2.46101
-dashboardUrl=https://sonar.leyton.fr/dashboard?id=nestjs-poc
-ceTaskId=AX95CtRUFquCVrHNZtUz
-ceTaskUrl=https://sonar.leyton.fr/api/ce/task?id=AX95CtRUFquCVrHNZtUz
