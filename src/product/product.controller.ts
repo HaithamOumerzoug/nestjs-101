@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGua
 import { AuthGuard } from '@nestjs/passport';
 import { Product } from '@prisma/client';
 import { GetUser } from '../user';
-import { ProductDto } from './dtos/product.dto';
+import { ProductDto } from './dtos';
 import { ProductService } from './services';
 
 /**
@@ -23,8 +23,8 @@ export class ProductController {
      * @returns list of user products
     */
     @Get('all')
-    async getALlMyProducts(@GetUser('id') userId: number):Promise<Product[]>{
-        return this.productService.getALlMyProducts(userId);
+    async getAllMyProducts(@GetUser('id') userId: number):Promise<Product[]>{
+        return this.productService.getAllMyProducts(userId);
     }
 
     /**

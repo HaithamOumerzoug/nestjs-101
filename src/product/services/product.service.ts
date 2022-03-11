@@ -2,7 +2,7 @@ import { BadRequestException, HttpException, HttpStatus, Injectable, InternalSer
 import { Product } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from '../../prisma';
-import { ProductDto } from '../dtos/product.dto';
+import { ProductDto } from '../dtos';
 
 @Injectable()
 export class ProductService {
@@ -10,7 +10,7 @@ export class ProductService {
         private readonly prismaService : PrismaService
     ) {}
 
-    async getALlMyProducts(userId : number):Promise<Product[]>{
+    async getAllMyProducts(userId : number):Promise<Product[]>{
         // * Method 1 : 
         /*return this.prismaService.product.findMany({
             where:{userId},
